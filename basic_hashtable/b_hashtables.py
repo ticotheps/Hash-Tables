@@ -38,7 +38,21 @@ def hash_djb2(string):
 # If you are overwriting a value with a different key, print a warning.
 # '''
 def hash_table_insert(hash_table, key, value):
-    pass
+    # Gets the hash value (index) from the hash function
+    key_hash = hash_table.hash_djb2(key)
+    # Converts the passed-in parameters into an array
+    key_value = [key, value]
+    
+    if hash_table.elements[key_hash] is None:
+        hash_table.elements[key_hash] = Pair(key, value)
+        return True
+    else:
+        for pair in hash_table.elements[key_hash]:
+            if pair[0] == key:
+                pair[1] = value
+                return True
+        hash_table.elements[key_hash].append(key_value)
+        return True
 
 
 # '''
