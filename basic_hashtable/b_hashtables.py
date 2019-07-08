@@ -18,15 +18,19 @@ class BasicHashTable:
         self.capacity = capacity
         self.elements = [None] * self.capacity
         
-
-
 # '''
 # Fill this in.
 # Research and implement the djb2 hash function
 # '''
-def hash(string, max):
-    pass
+def hash_djb2(string):
+    hash = 5381
+    for x in string:
+        hash = (hash * 33) + ord(x)
+    return hash
+  
 
+# def hash(string, max):
+#     pass
 
 # '''
 # Fill this in.

@@ -2,7 +2,7 @@
 class array:
     def __init__(self, capacity):
         self.capacity = capacity  # Maximum size the array can be
-        self.count = 0  # Number of actual elements in the array
+        self.count = 0  # Number of actual elements/buckets in the array
         self.elements = [None] * capacity
 
 
