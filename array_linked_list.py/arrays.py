@@ -2,15 +2,23 @@
 
 # Do not use any of the built in array functions for this exercise
 class array:
-    def __init__(self):
-        # Your code here
-        pass
+    def __init__(self, capacity):
+        self.capacity = capacity  # Maximum size the array can be
+        self.count = 0  # Current size being used
+        self.elements = [None] * capacity  # Creates empty cells (buckets)
 
 
 # Double the size of the given array
-def resize_array():
-    # Your code here
-    pass
+def resize_array(array):
+    new_capacity = array.capacity * 2
+    new_elements = [None] * new_capacity 
+    
+    # Copy over the elements
+    for i in range(array.count):
+        new_elements[i] = array.elements[i]
+        
+    array.elements = new_elements
+    array.capacity = new_capacity
 
 
 # Return an element of a given array at a given index
