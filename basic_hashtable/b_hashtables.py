@@ -38,19 +38,29 @@ def hash_djb2(string):
 # If you are overwriting a value with a different key, print a warning.
 # '''
 def hash_table_insert(hash_table, key, value):
-    # Gets the hash value (index) from the hash function
+    # Gets the index value that the passed-in 'value' will be inserted at
     key_hash = hash_table.hash_djb2(key)
-    # Converts the passed-in parameters into an array
+    # Converts the passed-in parameters (key, value) into a list that can
+    #   be inserted at the 'key_hash'
     key_value = [key, value]
-    
+    # If the cell at 'key_hash' (our index value) is empty... 
     if hash_table.elements[key_hash] is None:
-        hash_table.elements[key_hash] = Pair(key, value)
+        # Insert a new list, AT THAT INDEX (key_hash), containing the
+        #   values of the passed-in 'key' and 'value' parameters
+        hash_table.elements[key_hash] = list([key_value])
         return True
+    # If the cell at 'key_hash' is NOT empty...
     else:
+        # Iterate through each pair in that list to check if the passed-in
+        #   'key' parameter ALREADY exists in the hash_table...
         for pair in hash_table.elements[key_hash]:
+            # ...if the passed-in 'key' parameter already exists...
             if pair[0] == key:
+                # ...update its value to the passed-in 'value' parameter
                 pair[1] = value
                 return True
+        # If the passed-in 'key' parameter DOES NOT ALREADY exist within the
+        #   hash_table, append it to the hash_table
         hash_table.elements[key_hash].append(key_value)
         return True
 
