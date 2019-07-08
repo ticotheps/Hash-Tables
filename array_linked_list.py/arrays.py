@@ -2,7 +2,7 @@
 class array:
     def __init__(self, capacity):
         self.capacity = capacity  # Maximum size the array can be
-        self.count = 0  # Current size being used
+        self.count = 0  # Number of actual elements in the array
         self.elements = [None] * capacity
 
 
@@ -57,7 +57,6 @@ def array_append(array, element):
     # (Without using a built in function)
 
     array_insert(array, element, array.count)
-    pass
 
 
 # Remove the first occurence of the given element from the array
