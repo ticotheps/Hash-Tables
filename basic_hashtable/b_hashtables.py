@@ -53,8 +53,8 @@ def hash_table_insert(hash_table, key, value):
         return True
     # If the cell at 'key_hash' is NOT empty...
     else:
-        # Iterate through each pair in that list to check if the passed-in
-        #   'key' parameter ALREADY exists in the hash_table...
+        # Iterate through each pair in that cell to check if the passed-in
+        #   'key' parameter is equal to any of them...
         for pair in hash_table.elements[key_hash]:
             # ...if the passed-in 'key' parameter already exists...
             if pair[0] == key:
@@ -74,8 +74,23 @@ def hash_table_insert(hash_table, key, value):
 # If you try to remove a value that isn't there, print a warning.
 # '''
 def hash_table_remove(hash_table, key):
-    pass
-
+    # Uses the 'hash_djb2()' function to get the index value in order to 
+    #   access & delete the value at the passed-in 'key' parameter
+    key_hash = hash_table.hash_djb2(key)
+    # If the cell at that 'key_hash' (the index value) is empty, which
+    #   means that the desired key/value pair doesn't exist... 
+    if hash_table.elements[key_hash] is None:
+        # ...return 'False' because there's nothing to delete!
+        return False
+    # ...if the cell at that 'key_hash' is NOT empty, then iterate through
+    #    the pairs at that cell (using 'range' which gives you access to the
+    #    index of an item for deletion)...
+    for i in range(0, len(hash_table[key_hash])):
+        # ...if the passed-in 'key' parameter DOES exist within the items
+        #   at this cell...
+        if hash_table[key_hash][i][0] == key:
+            hash_table[key_hash].pop(i)
+            return True
 
 # '''
 # Fill this in.
@@ -88,10 +103,10 @@ def hash_table_retrieve(hash_table, key):
     key_hash = hash_table.hash_djb2(key)
     # If the cell at that 'key_hash' (the index value) is empty... 
     if hash_table.elements[key_hash] is None:
-        # Iterate through each pair in that list to check if the passed-in
-        #   'key' parameter ALREADY exists in the hash_table...
+        # Iterate through each pair in that cell to check if the passed-in
+        #   'key' parameter is equal to any of them...
         for pair in hash_table.elements[key_hash]:
-            # ...if the passed-in 'key' parameter already exists...
+            # ...if the passed-in 'key' parameter DOES already exists...
             if pair[0] == key:
                 # ...return that value
                 return pair[1]
