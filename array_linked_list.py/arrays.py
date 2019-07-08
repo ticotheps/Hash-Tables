@@ -4,7 +4,7 @@
 class array:
     def __init__(self, capacity):
         self.capacity = capacity  # Maximum size the array can be
-        self.count = 0  # Current size being used
+        self.count = 0  # Number of existing elements in our array
         self.elements = [None] * capacity  # Creates empty cells (buckets)
 
 
@@ -22,16 +22,21 @@ def resize_array(array):
 
 
 # Return an element of a given array at a given index
-def array_read():
+def array_read(array, index):
     # Throw an error if array is out of the current count
-    # Your code here
-    pass
+    if index >= array.count:
+        print("Error out of bounds")
+        return None
+    
+    return array.elements[index]
 
 
 # Insert an element in a given array at a given index
-def array_insert():
+def array_insert(array, index):
     # Throw an error if array is out of the current count
-
+    if index >= array.count:
+        print("Error out of bounds")
+        return None
     # Resize the array if the number of elements is over capacity
 
     # Move the elements to create a space at 'index'
@@ -79,6 +84,7 @@ def array_print(array):
 
 
 # # Testing
+
 # arr = array(1)
 
 # array_insert(arr, "STRING1", 0)
