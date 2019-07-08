@@ -39,11 +39,13 @@ def hash_djb2(string):
 # '''
 def hash_table_insert(hash_table, key, value):
     # Gets the index value that the passed-in 'value' will be inserted at
+    # Uses the 'hash_djb2()' function to get the index value where the 
+    #   the passed-in 'value' parameter will be inserted at.
     key_hash = hash_table.hash_djb2(key)
     # Converts the passed-in parameters (key, value) into a list that can
     #   be inserted at the 'key_hash'
     key_value = [key, value]
-    # If the cell at 'key_hash' (our index value) is empty... 
+    # If the cell at 'key_hash' (the index value) is empty... 
     if hash_table.elements[key_hash] is None:
         # Insert a new list, AT THAT INDEX (key_hash), containing the
         #   values of the passed-in 'key' and 'value' parameters
@@ -60,7 +62,8 @@ def hash_table_insert(hash_table, key, value):
                 pair[1] = value
                 return True
         # If the passed-in 'key' parameter DOES NOT ALREADY exist within the
-        #   hash_table, append it to the hash_table
+        #   list of pairs at that cell, then it is a NEW key, which we will
+        #   append to that cell in the hash_table.
         hash_table.elements[key_hash].append(key_value)
         return True
 
@@ -80,8 +83,21 @@ def hash_table_remove(hash_table, key):
 # Should return None if the key is not found.
 # '''
 def hash_table_retrieve(hash_table, key):
-    pass
-
+    # Uses the 'hash_djb2()' function to get the index value in order to 
+    #   access & retrieve a value for the passed-in 'key' parameter
+    key_hash = hash_table.hash_djb2(key)
+    # If the cell at that 'key_hash' (the index value) is empty... 
+    if hash_table.elements[key_hash] is None:
+        # Iterate through each pair in that list to check if the passed-in
+        #   'key' parameter ALREADY exists in the hash_table...
+        for pair in hash_table.elements[key_hash]:
+            # ...if the passed-in 'key' parameter already exists...
+            if pair[0] == key:
+                # ...return that value
+                return pair[1]
+    # If the passed-in 'key' parameter does not exist in the cell at that
+    #   key_hash, return 'None'
+    return None
 
 def Testing():
     ht = BasicHashTable(16)
