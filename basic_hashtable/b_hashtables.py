@@ -7,6 +7,8 @@ class Pair:
     def __init__(self, key, value):
         self.key = key
         self.value = value
+    def __str__(self):
+        return f'key: {self.key}, value: {self.value}'
 
 
 # '''
@@ -44,7 +46,7 @@ def hash_table_insert(hash_table, key, value):
     # Creates a variable to represent the key/value pair_in_hand at the hashed_index
     pair_in_bucket = hash_table.all_buckets[hashed_index]
     # If the bucket at 'hashed_index' is not empty... 
-    if hash_table.all_buckets[hashed_index] is not None:
+    if pair_in_bucket is not None:
         # ...and if the passed-in "key" is NOT the same as the "key" in the
         #    bucket...
         if pair_in_hand.key != pair_in_bucket.key:
@@ -53,7 +55,7 @@ def hash_table_insert(hash_table, key, value):
     # Set the value of that key (from the bucket) equal to the passed-in
     #   "key"
     hash_table.all_buckets[hashed_index] = pair_in_hand
-
+    print(pair_in_hand)
 
 # '''
 # Fill this in.
