@@ -17,7 +17,7 @@ class BasicHashTable:
     def __init__(self, capacity):
         self.capacity = capacity
         # self.count = 0
-        self.storage = [None] * self.capacity
+        self.storage = [None] * capacity
         
 # '''
 # Fill this in.
@@ -94,14 +94,14 @@ def hash_table_retrieve(hash_table, key):
 
 
 def Testing():
-    print(hash("hello world", 10))
-    print(hash("how are you today?", 10))
+    # print(hash("hello world", 10))
+    # print(hash("how are you today?", 10))
     
     ht = BasicHashTable(16)
 
     hash_table_insert(ht, "line", "Here today...\n")
 
-    # hash_table_remove(ht, "line")
+    hash_table_remove(ht, "line")
 
     if hash_table_retrieve(ht, "line") is None:
         print("...gone tomorrow (success!)")
