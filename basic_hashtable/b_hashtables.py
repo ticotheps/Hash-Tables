@@ -61,23 +61,18 @@ def hash_table_insert(hash_table, key, value):
 # If you try to remove a value that isn't there, print a warning.
 # '''
 def hash_table_remove(hash_table, key):
-    # Uses the 'hash()' function to get the index value in order to 
-    #   access & delete the value at the passed-in 'key' parameter
+    # Uses the 'hash()' function to get the index in order to 
+    #   access & delete the value for the passed-in 'key' parameter
     index = hash(key, hash_table.capacity)
     # If the cell at that 'index' (the index value) is empty, which
     #   means that the desired key/value pair doesn't exist... 
-    if hash_table.storage[index] is None:
-        # ...return 'False' because there's nothing to delete!
-        return False
-    # ...if the cell at that 'index' is NOT empty, then iterate through
-    #    the pairs at that cell (using 'range' which gives you access to the
-    #    index of an item for deletion)...
-    for i in range(0, len(hash_table[index])):
-        # ...if the passed-in 'key' parameter DOES exist within the items
-        #   at this cell...
-        if hash_table[index][i][0] == key:
-            hash_table[index].pop(i)
-            return True
+    # If the bucket at 'index' is empty OR the ... 
+    if (hash_table.storage[index] is None or
+            hash_table.storage[index].key != key):
+        print("Unable to remove item with key " + key)
+    else:
+        hash_table.storage[index] = None
+
 
 # '''
 # Fill this in.
