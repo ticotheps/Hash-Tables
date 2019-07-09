@@ -23,15 +23,12 @@ class BasicHashTable:
 # Fill this in.
 # Research and implement the djb2 hash function
 # '''
-def hash(string, max):
+def hash(string, max):                                    
     hash = 5381
-    for x in string:
-        hash = (hash * 33) + ord(x)
+    for char in string:
+        hash = (( hash << 5) + hash) + ord(char)
     return hash % max
   
-
-# def hash(string, max):
-#     pass
 
 # '''
 # Fill this in.
@@ -42,7 +39,7 @@ def hash_table_insert(hash_table, key, value):
     # Gets the index value that the passed-in 'value' will be inserted at
     # Uses the 'hash()' function to get the index value where the 
     #   the passed-in 'value' parameter will be inserted at.
-    key_hash = hash(key, hash_table.capacity)
+    key_hash = hash(key, hash_table.capacity) % max
     # Converts the passed-in parameters (key, value) into a list that can
     #   be inserted at the 'key_hash'
     key_value = [key, value]
@@ -50,7 +47,7 @@ def hash_table_insert(hash_table, key, value):
     if hash_table.elements[key_hash] is None:
         # Insert a new list, AT THAT INDEX (key_hash), containing the
         #   values of the passed-in 'key' and 'value' parameters
-        hash_table.elements[key_hash] = list([key_value])
+        hash_table.elements[key_hash] = Pair(key, value)
         return True
     # If the cell at 'key_hash' is NOT empty...
     else:
@@ -116,6 +113,9 @@ def hash_table_retrieve(hash_table, key):
     return None
 
 def Testing():
+    print(hash("hello world", 10))
+    print(hash("how are you today?", 10))
+    
     ht = BasicHashTable(16)
 
     hash_table_insert(ht, "line", "Here today...\n")
