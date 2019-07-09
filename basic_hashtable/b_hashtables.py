@@ -17,7 +17,7 @@ class BasicHashTable:
     def __init__(self, capacity):
         self.capacity = capacity
         self.count = 0
-        self.elements = [None] * self.capacity
+        self.storage = [None] * self.capacity
         
 # '''
 # Fill this in.
@@ -36,34 +36,23 @@ def hash(string, max):
 # If you are overwriting a value with a different key, print a warning.
 # '''
 def hash_table_insert(hash_table, key, value):
-    # Gets the index value that the passed-in 'value' will be inserted at
-    # Uses the 'hash()' function to get the index value where the 
+    # Uses the 'hash()' function to get the index where the 
     #   the passed-in 'value' parameter will be inserted at.
-    key_hash = hash(key, hash_table.capacity) % max
-    # Converts the passed-in parameters (key, value) into a list that can
-    #   be inserted at the 'key_hash'
-    key_value = [key, value]
-    # If the cell at 'key_hash' (the index value) is empty... 
-    if hash_table.elements[key_hash] is None:
-        # Insert a new list, AT THAT INDEX (key_hash), containing the
-        #   values of the passed-in 'key' and 'value' parameters
-        hash_table.elements[key_hash] = Pair(key, value)
-        return True
-    # If the cell at 'key_hash' is NOT empty...
-    else:
-        # Iterate through each pair in that cell to check if the passed-in
-        #   'key' parameter is equal to any of them...
-        for pair in hash_table.elements[key_hash]:
-            # ...if the passed-in 'key' parameter already exists...
-            if pair[0] == key:
-                # ...update its value to the passed-in 'value' parameter
-                pair[1] = value
-                return True
-        # If the passed-in 'key' parameter DOES NOT ALREADY exist within the
-        #   list of pairs at that cell, then it is a NEW key, which we will
-        #   append to that cell in the hash_table.
-        hash_table.elements[key_hash].append(key_value)
-        return True
+    index = hash(key, hash_table.capacity)
+    # Creates a new pair and sets it to a new variable
+    pair = Pair(key, value)
+    # Creates a variable to represent the key/value pair at the index
+    stored_pair = hash_table.storage[index]
+    # If the bucket at 'index' is not empty... 
+    if hash_table.storage[index] is not None:
+        # ...and if the passed-in "key" is NOT the same as the "key" in the
+        #    bucket...
+        if pair.key != stored_pair.key:
+            # ...print a warning indicating that it isn't empty
+            print("Warning, index at " + str(index) + " is not empty!")
+    # Set the value of that key (from the bucket) equal to the passed-in
+    #   "key"
+    hash_table.storage[index] = pair
 
 
 # '''
@@ -71,46 +60,46 @@ def hash_table_insert(hash_table, key, value):
 
 # If you try to remove a value that isn't there, print a warning.
 # '''
-def hash_table_remove(hash_table, key):
-    # Uses the 'hash()' function to get the index value in order to 
-    #   access & delete the value at the passed-in 'key' parameter
-    key_hash = hash(key, hash_table.capacity)
-    # If the cell at that 'key_hash' (the index value) is empty, which
-    #   means that the desired key/value pair doesn't exist... 
-    if hash_table.elements[key_hash] is None:
-        # ...return 'False' because there's nothing to delete!
-        return False
-    # ...if the cell at that 'key_hash' is NOT empty, then iterate through
-    #    the pairs at that cell (using 'range' which gives you access to the
-    #    index of an item for deletion)...
-    for i in range(0, len(hash_table[key_hash])):
-        # ...if the passed-in 'key' parameter DOES exist within the items
-        #   at this cell...
-        if hash_table[key_hash][i][0] == key:
-            hash_table[key_hash].pop(i)
-            return True
+# def hash_table_remove(hash_table, key):
+#     # Uses the 'hash()' function to get the index value in order to 
+#     #   access & delete the value at the passed-in 'key' parameter
+#     index = hash(key, hash_table.capacity)
+#     # If the cell at that 'index' (the index value) is empty, which
+#     #   means that the desired key/value pair doesn't exist... 
+#     if hash_table.storage[index] is None:
+#         # ...return 'False' because there's nothing to delete!
+#         return False
+#     # ...if the cell at that 'index' is NOT empty, then iterate through
+#     #    the pairs at that cell (using 'range' which gives you access to the
+#     #    index of an item for deletion)...
+#     for i in range(0, len(hash_table[index])):
+#         # ...if the passed-in 'key' parameter DOES exist within the items
+#         #   at this cell...
+#         if hash_table[index][i][0] == key:
+#             hash_table[index].pop(i)
+#             return True
 
 # '''
 # Fill this in.
 
 # Should return None if the key is not found.
 # '''
-def hash_table_retrieve(hash_table, key):
-    # Uses the 'hash()' function to get the index value in order to 
-    #   access & retrieve a value for the passed-in 'key' parameter
-    key_hash = hash(key, hash_table.capacity)
-    # If the cell at that 'key_hash' (the index value) is empty... 
-    if hash_table.elements[key_hash] is None:
-        # Iterate through each pair in that cell to check if the passed-in
-        #   'key' parameter is equal to any of them...
-        for pair in hash_table.elements[key_hash]:
-            # ...if the passed-in 'key' parameter DOES already exists...
-            if pair[0] == key:
-                # ...return that value
-                return pair[1]
-    # If the passed-in 'key' parameter does not exist in the cell at that
-    #   key_hash, return 'None'
-    return None
+# def hash_table_retrieve(hash_table, key):
+#     # Uses the 'hash()' function to get the index value in order to 
+#     #   access & retrieve a value for the passed-in 'key' parameter
+#     index = hash(key, hash_table.capacity)
+#     # If the cell at that 'index' (the index value) is empty... 
+#     if hash_table.storage[index] is None:
+#         # Iterate through each pair in that cell to check if the passed-in
+#         #   'key' parameter is equal to any of them...
+#         for pair in hash_table.storage[index]:
+#             # ...if the passed-in 'key' parameter DOES already exists...
+#             if pair[0] == key:
+#                 # ...return that value
+#                 return pair[1]
+#     # If the passed-in 'key' parameter does not exist in the cell at that
+#     #   index, return 'None'
+#     return None
 
 def Testing():
     print(hash("hello world", 10))
@@ -120,12 +109,12 @@ def Testing():
 
     hash_table_insert(ht, "line", "Here today...\n")
 
-    hash_table_remove(ht, "line")
+    # hash_table_remove(ht, "line")
 
-    if hash_table_retrieve(ht, "line") is None:
-        print("...gone tomorrow (success!)")
-    else:
-        print("ERROR:  STILL HERE")
+    # if hash_table_retrieve(ht, "line") is None:
+    #     print("...gone tomorrow (success!)")
+    # else:
+    #     print("ERROR:  STILL HERE")
 
 
 Testing()
