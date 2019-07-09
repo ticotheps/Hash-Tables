@@ -16,17 +16,18 @@ class Pair:
 class BasicHashTable:
     def __init__(self, capacity):
         self.capacity = capacity
+        self.count = 0
         self.elements = [None] * self.capacity
         
 # '''
 # Fill this in.
 # Research and implement the djb2 hash function
 # '''
-def hash_djb2(string):
+def hash(string, max):
     hash = 5381
     for x in string:
         hash = (hash * 33) + ord(x)
-    return hash
+    return hash % max
   
 
 # def hash(string, max):
@@ -39,9 +40,9 @@ def hash_djb2(string):
 # '''
 def hash_table_insert(hash_table, key, value):
     # Gets the index value that the passed-in 'value' will be inserted at
-    # Uses the 'hash_djb2()' function to get the index value where the 
+    # Uses the 'hash()' function to get the index value where the 
     #   the passed-in 'value' parameter will be inserted at.
-    key_hash = hash_table.hash_djb2(key)
+    key_hash = hash(key, hash_table.capacity)
     # Converts the passed-in parameters (key, value) into a list that can
     #   be inserted at the 'key_hash'
     key_value = [key, value]
@@ -74,9 +75,9 @@ def hash_table_insert(hash_table, key, value):
 # If you try to remove a value that isn't there, print a warning.
 # '''
 def hash_table_remove(hash_table, key):
-    # Uses the 'hash_djb2()' function to get the index value in order to 
+    # Uses the 'hash()' function to get the index value in order to 
     #   access & delete the value at the passed-in 'key' parameter
-    key_hash = hash_table.hash_djb2(key)
+    key_hash = hash(key, hash_table.capacity)
     # If the cell at that 'key_hash' (the index value) is empty, which
     #   means that the desired key/value pair doesn't exist... 
     if hash_table.elements[key_hash] is None:
@@ -98,9 +99,9 @@ def hash_table_remove(hash_table, key):
 # Should return None if the key is not found.
 # '''
 def hash_table_retrieve(hash_table, key):
-    # Uses the 'hash_djb2()' function to get the index value in order to 
+    # Uses the 'hash()' function to get the index value in order to 
     #   access & retrieve a value for the passed-in 'key' parameter
-    key_hash = hash_table.hash_djb2(key)
+    key_hash = hash(key, hash_table.capacity)
     # If the cell at that 'key_hash' (the index value) is empty... 
     if hash_table.elements[key_hash] is None:
         # Iterate through each pair in that cell to check if the passed-in
